@@ -1,0 +1,23 @@
+import mysql.connector
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="newpassword",
+  database="mydatabase"
+)
+mycursor = mydb.cursor()
+
+sql = "INSERT INTO movie (name,actor,actress,release_year,director) VALUES (%s,%s,%s,%S,%s)"
+val = [
+  ('SOORARAI POTTRU','SURIYA','APARNA BALAMURALI','2020','SUDHA KONGARA PRASAD')
+  ('MASTER','VIJAY','MALAVIKA MOHANAN','2021','LOKESH KANAGARAJ')
+  ('ASURAN','DHANUSH','MANJU WARRIER','2019','VETRIMAARAN')
+  ('BIGIL','VIJAY','NAYANTHARA','2019','ATLEE KUMAR')
+  ('SARKAR','VIJAY','KEERTHY SURESH','2018','A.R.MURUGADOSS')
+]
+
+mycursor.executemany(sql, val)
+
+mydb.commit()
+
+print(mycursor.rowcount, "are inserted")
